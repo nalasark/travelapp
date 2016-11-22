@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
+        android:background="#59cdc4"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#59cdc4">
+        android:layout_alignParentStart="true">
 
         <Button
             android:text="+"
@@ -30,14 +30,33 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
-        <ListView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:id="@+id/list_itin"
-            android:layout_above="@+id/createnew"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="17dp" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="70dp"
+            android:padding="10dp"
+            android:background="@android:color/background_light">
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Name" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Budget" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ListView" />
+
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -60,6 +79,40 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:textColor="@android:color/background_light" />
+
+        <Button
+            android:text="reset"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/reset"
+            android:background="@drawable/custombutton"
+            android:layout_alignTop="@+id/createnew"
+            android:layout_toRightOf="@+id/createnew"
+            android:layout_toEndOf="@+id/createnew"
+            android:layout_marginLeft="46dp"
+            android:layout_marginStart="46dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/custombutton"
+            android:id="@+id/imageView"
+            android:layout_alignTop="@+id/createnew"
+            android:layout_toLeftOf="@+id/createnew"
+            android:layout_toStartOf="@+id/createnew"
+            android:layout_marginRight="50dp"
+            android:layout_marginEnd="50dp" />
+
+        <Button
+            android:id="@+id/weather"
+            android:background="@drawable/weather2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignRight="@+id/imageView"
+            android:layout_alignEnd="@+id/imageView"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="3dp" />
 
     </RelativeLayout>
 

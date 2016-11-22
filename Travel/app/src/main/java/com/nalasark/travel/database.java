@@ -70,13 +70,18 @@ public class database {
     };
 
     private String[] hotel = {
-            "Select your hotel:",
-            "Hotel Inn Atrium",
-            "intercontinental singapore",
-            "Crowne Plaza Hotel",
             "Mandarin Orchard Singapore",
-            "Capella Hotel",
-            "Novotel Clark Quay"
+            "Four Seasons Hotel Singapore",
+            "Shangri-La Hotel Singapore",
+            "Mandarin Oriental Singapore",
+            "Crowne Plaza Changi Airport",
+            "Marina Mandarin Singapore",
+            "Holiday Inn Express Singapore Clarke Quay",
+            "Concorde Hotel Singapore",
+            "Somerset Liang Court Singapore",
+            "Ascott Raffles Place Singapore",
+            "Grand Pacific Hotel",
+            "Furama RiverFront"
     };
 
     private String[] parkInfo = {
@@ -249,6 +254,22 @@ public class database {
                 foodInfo) {
             temp.add(info);
         }
+        return temp;
+    }
+
+    public ArrayList<String> getAllPlaces() {
+        temp.clear();
+
+        for (String ent : entertainment) {
+            temp.add(ent);}
+        for (String ent : food) {
+            temp.add(ent);}
+        for (String ent : parks) {
+            temp.add(ent);}
+        for (String ent : religious) {
+            temp.add(ent);}
+        for (String ent : museums) {
+            temp.add(ent);}
         return temp;
     }
 }

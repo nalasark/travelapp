@@ -77,8 +77,8 @@ public class PlaceInfo extends AppCompatActivity {
 
         final SharedPreferences sharedPref = getSharedPreferences("Data", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
-        final Set<String> empty = new HashSet<String>();
-        final Set<String> itinerary = sharedPref.getStringSet("Itinerary",empty);
+        final HashSet<String> empty = new HashSet<String>();
+        final HashSet<String> itinerary = new HashSet<String>(sharedPref.getStringSet("Itinerary",empty));
 
 
         ToggleButton storeOrRemove = (ToggleButton) findViewById(R.id.storeOrRemove);
@@ -88,13 +88,13 @@ public class PlaceInfo extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
                 if(isChecked){
                     itinerary.add(place);
-                    editor.putStringSet("Itinerary",itinerary);
+                    editor.putStringSet("Itinerary",(Set<String>)itinerary.clone());
                     editor.commit();
 
                     Toast.makeText(getBaseContext(),itinerary.toString(),Toast.LENGTH_SHORT).show();
                 } else {
                     itinerary.remove(place);
-                    editor.putStringSet("Itinerary",itinerary);
+                    editor.putStringSet("Itinerary",(Set<String>)itinerary.clone());
                     editor.commit();
 
                     Toast.makeText(getBaseContext(),itinerary.toString(),Toast.LENGTH_SHORT).show();

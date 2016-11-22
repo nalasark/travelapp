@@ -35,8 +35,8 @@ public class create extends AppCompatActivity {
         //reading writing
         final SharedPreferences sharedPref = getSharedPreferences("Data", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
-        final Set<String> empty = new HashSet<String>();
-        Set<String> itinerary = sharedPref.getStringSet("Itinerary",empty);
+        final HashSet<String> empty = new HashSet<String>();
+        final HashSet<String> itinerary = new HashSet<String>(sharedPref.getStringSet("Itinerary",empty));
 
         ArrayList<String> list_hotels = new ArrayList<String>();
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list_hotels);
@@ -55,9 +55,10 @@ public class create extends AppCompatActivity {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Set<String> itinerary = sharedPref.getStringSet("Itinerary",empty);
+//                Set<String> itinerary = sharedPref.getStringSet("Itinerary",empty);
+                final HashSet<String> itinerary = new HashSet<String>(sharedPref.getStringSet("Itinerary",empty));
                 listArrayAdapter.clear();
-                listArrayAdapter.addAll(itinerary);
+                listArrayAdapter.addAll((Set<String>)itinerary.clone());
                 Toast.makeText(getBaseContext(),"refresh",Toast.LENGTH_SHORT).show();
             }
         });
@@ -77,7 +78,6 @@ public class create extends AppCompatActivity {
         addplaces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getBaseContext(),"add",Toast.LENGTH_SHORT).show();
                 Intent places = new Intent(create.this, places.class);
                 startActivity(places);
             }

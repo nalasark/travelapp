@@ -2,6 +2,7 @@ package com.nalasark.travel;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -45,7 +47,6 @@ public class Itinerary extends AppCompatActivity {
     final static ArrayList<String> places = new ArrayList<String>();        //ArrayList attached to adapter, to display the results of the shortest path wrt budget to the user
     static ArrayAdapter<String> itemsAdapter;                               //adapter for above-mentioned ArrayList
 
-
     static ArrayList<String> orderOfLocation = new ArrayList<String>();     //stores the order of which lookup occurs for the url
     static List<List<Integer>> distanceMap = new ArrayList<List<Integer>>();    //stores the downloaded distances for all the nodes, in a table format indicated by orderOfLocation
     static ArrayList<Integer> orderOfVisit;                                 //stores the generated shortest path for travelling salesman
@@ -74,28 +75,34 @@ public class Itinerary extends AppCompatActivity {
             System.out.println(distanceFromCurrentNodeToNext);
             associatedDistances.put(orderOfVisit.size()-1, distanceFromCurrentNodeToNext); //include the distance from last node back to home
 
+            final SharedPreferences sharedPref = getSharedPreferences("Data", Context.MODE_PRIVATE);
+            final SharedPreferences.Editor editor = sharedPref.edit();
+            final HashSet<String> empty = new HashSet<String>();
+            final HashSet<String> itinerary = new HashSet<String>(sharedPref.getStringSet("Itinerary",empty));
+            final String budgetData = sharedPref.getString("Budget", new String());
+            double budget = Double.parseDouble(budgetData);
 
 
             //TransportBudgetSettler(BUDGET,MAP OF TRAVEL)
-            TransportBudgetSettler transportSettler = new TransportBudgetSettler(7,associatedDistances);
+            TransportBudgetSettler transportSettler = new TransportBudgetSettler(budget,associatedDistances);
             ArrayList<String> transportMeans = transportSettler.optimiseTransportMode();
 
-            final SharedPreferences sharedPref = getSharedPreferences("Data", Context.MODE_PRIVATE);
-            final SharedPreferences.Editor editor = sharedPref.edit();
-            final Set<String> empty = new HashSet<String>();
-            final Set<String> itinerary = sharedPref.getStringSet("Final",empty);
+            ArrayList<String> Final = new ArrayList<String>();
 
             //Below is for updating adapterview
             for (int index : orderOfVisit){
                 String goToLocation = orderOfLocation.get(index);
-                itinerary.add(goToLocation + "\nDistance to below: "+ associatedDistances.get(index)+"\n Advised to take "+ transportMeans.get(index+1));
+                Final.add(goToLocation + "\nDistance to below: "+ associatedDistances.get(index)+"\n Advised to take "+ transportMeans.get(index+1));
                 places.add(goToLocation + "\nDistance to below: "+ associatedDistances.get(index)+"\n Advised to take "+ transportMeans.get(index+1));//with index from orderOfVisit, get the string location from orderOfLocation
             }
             places.add(orderOfLocation.get(0)); //home is the last place
             places.add(transportMeans.get(0));
-            itinerary.add(orderOfLocation.get(0)); //home is the last place
-            itinerary.add(transportMeans.get(0));
-            editor.putStringSet("Final",itinerary);
+            Final.add(orderOfLocation.get(0)); //home is the last place
+            Final.add(transportMeans.get(0));
+
+            String Final2 = android.text.TextUtils.join(",", Final);
+
+            editor.putString("Final",Final2);
             editor.commit();
 /*
             //iterate through the map for display
@@ -111,6 +118,10 @@ public class Itinerary extends AppCompatActivity {
 //            tempDistance = distanceMap.get(orderOfVisit.get(0)).get(orderOfVisit.get(1));
 //            System.out.println("If we cab for first path, we pay "+transportSettler.calculateTaxiCost(tempDistance));
 //            System.out.println("If we take public transport for first path, we pay "+transportSettler.calculatePublicTransportCost(tempDistance));
+            associatedDistances.clear();
+            orderOfLocation.clear();
+            distanceMap.clear();
+            orderOfVisit.clear();
 
 
         }
@@ -146,20 +157,31 @@ public class Itinerary extends AppCompatActivity {
 
         final SharedPreferences sharedPref = getSharedPreferences("Data", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
-        final String empty = new String();
-        final String name = sharedPref.getString("Name",empty);
-        final String hotel = sharedPref.getString("Hotel",empty);
-        final String budget = sharedPref.getString("Budget",empty);
+        final HashSet<String> empty = new HashSet<String>();
+        final HashSet<String> itinerary = new HashSet<String>(sharedPref.getStringSet("Itinerary",empty));
 
-        final Set<String> empty2 = new HashSet<String>();
-        final Set<String> itinerary = sharedPref.getStringSet("Itinerary", empty2);
+        final String emptyString = new String();
+        final String name = sharedPref.getString("Name",emptyString);
+        final String hotel = sharedPref.getString("Hotel",emptyString);
+        final String budget = sharedPref.getString("Budget",emptyString);
+
 
         //Temporary sample used, format of <STARTING HOTEL>, ARRAYLIST OF ITENARY
-        System.out.print(itinerary);
-        generateDistanceMap("Sentosa Singapore", new ArrayList<String>(itinerary));
+        ArrayList<String> Final = new ArrayList<String>(itinerary);
+        System.out.print(Final);
+        generateDistanceMap(hotel, Final);
 
         //generateDistanceMap("Sentosa Singapore", data.getReligious());
         //getJSONString("Fullerton Hotel", data.getParks());
+
+        Button addplaces = (Button) findViewById(R.id.home);
+        addplaces.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent home = new Intent(Itinerary.this, MainActivity.class);
+                startActivity(home);
+            }
+        });
     }
 
 
@@ -176,11 +198,12 @@ public class Itinerary extends AppCompatActivity {
         }
     }
 
-    private String KEY = "AIzaSyDKl5Kpec3loPgTSW9hpU6R5in2ojl3RB8";   //tenzin's key
+    //private String KEY = "AIzaSyDKl5Kpec3loPgTSW9hpU6R5in2ojl3RB8";   //tenzin's key
     //private String KEY = "AIzaSyAbhohlm26WVT_H8HJMkFMghB5QGm4Mzc0"; //bernard's key
     //private String KEY = "AIzaSyBw4_44qvcaVt8Mdk6UCuAteotYSS2lQ10"; //Jiahong's key
     //private String KEY = "AIzaSyAreMaarsk5IVDsEo0nteGjVxMPGxWdfvY"; //Alan's key
     //private String KEY =  "AIzaSyDlYCA8hMSeTUbjjDqv1110j3S6tV_QUfc";    //Eiros' key
+    private String KEY = "AIzaSyBRwwUSC4rqo0ZV90ywgAwFCKc0q6FBg2s"; //Soyoung's key
 
     public void getJSONString(String fromPlace, ArrayList<String> toPlaces) {
         String request = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + fromPlace.replace(" ", "+") + "&destinations=";
