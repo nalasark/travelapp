@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nalasark.travel.places">
+
+    <!--android:layout_alignRight="@+id/religious"-->
+    <!--android:layout_alignEnd="@+id/religious"-->
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="16dp" />
+
+    <ListView
+        android:text="SearchList"
+        android:layout_width="wrap_content"
+        android:id="@+id/searchList"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/religiousToggle"
+        android:layout_below="@+id/searchView"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:layout_height="370dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="61dp">
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:textOff="Museum"
+            android:textOn="Museum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/museumToggle"
+            android:layout_below="@+id/parksToggle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            style="@android:style/Widget.Holo.Light.Button.Toggle"
+            android:textSize="12sp" />
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:textOff="Entertainment"
+            android:textOn="Entertainment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/entertainmentToggle"
+            android:textSize="10sp"
+            android:layout_above="@+id/back"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            style="@android:style/Widget.Holo.Light.Button.Toggle" />
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:textOff="Religious"
+            android:textOn="Religious"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/religiousToggle"
+            android:layout_above="@+id/entertainmentToggle"
+            android:layout_toRightOf="@+id/searchView"
+            android:layout_toEndOf="@+id/searchView"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:textAllCaps="false"
+            style="@android:style/Widget.Holo.Light.Button.Toggle" />
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:textOff="Food"
+            android:textOn="Food"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/foodToggle"
+            android:layout_alignBaseline="@+id/entertainmentToggle"
+            android:layout_alignBottom="@+id/entertainmentToggle"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            style="@android:style/Widget.Holo.Light.Button.Toggle"
+            android:textSize="12sp" />
+
+        <ToggleButton
+            android:text="ToggleButton"
+            android:textOff="Parks"
+            android:textOn="Parks"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/parksToggle"
+            android:layout_alignBaseline="@+id/religiousToggle"
+            android:layout_alignBottom="@+id/religiousToggle"
+            android:layout_toLeftOf="@+id/searchView"
+            android:layout_toStartOf="@+id/searchView"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            style="@android:style/Widget.Holo.Light.Button.Toggle"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="5dp"
+        android:background="#59cdc4">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/back"
+            android:background="@drawable/custombutton2"
+            android:layout_marginLeft="11dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+
+        <Button
+            android:text="Reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reset"
+            android:layout_marginLeft="18dp"
+            android:layout_marginStart="18dp"
+            android:background="@drawable/custombutton2"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/back"
+            android:layout_toEndOf="@+id/back"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
