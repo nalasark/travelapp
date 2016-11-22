@@ -60,8 +60,13 @@ public class MainActivity extends AppCompatActivity {
         final TextView name = (TextView)findViewById(R.id.Name);
         final TextView budget = (TextView)findViewById(R.id.Budget);
 
-        name.setText(nameData);
-        budget.setText(budgetData);
+        if(nameData != null && !nameData.isEmpty()) {
+            name.setText(nameData);
+            budget.setText(budgetData);
+        } else {
+            name.setText("");
+            budget.setText("No itinerary displayed. Click + below to create.");
+        }
         final ListView listView = (ListView) findViewById(R.id.ListView);
 
         ArrayList<String> list_final = new ArrayList<String>();
@@ -76,10 +81,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 editor.remove("Final");
+                editor.remove("Name");
+                editor.remove("Budget");
                 editor.commit();
                 listArrayAdapter.clear();
+                budget.setText("No itinerary displayed. Click + below to create.");
                 name.setText("");
-                budget.setText("");
             }
         });
 

@@ -174,11 +174,12 @@ public class Itinerary extends AppCompatActivity {
         //generateDistanceMap("Sentosa Singapore", data.getReligious());
         //getJSONString("Fullerton Hotel", data.getParks());
 
-        Button addplaces = (Button) findViewById(R.id.home);
-        addplaces.setOnClickListener(new View.OnClickListener() {
+        Button home = (Button) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent home = new Intent(Itinerary.this, MainActivity.class);
+                home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(home);
             }
         });
